@@ -29,6 +29,7 @@ function iniciarApp() {
             option.value = strCategory;
             option.textContent = strCategory;
             selectCategorias.appendChild(option);
+
         })
     }
 
@@ -46,34 +47,34 @@ function iniciarApp() {
 
         const heading = document.createElement('H2');
         heading.classList.add('text-center', 'text-black', 'my-5');
-        heading.textContent = recetas.length ? 'Resultados' : 'No hay resultados';
-        resultado.appendChild(heading);
+        heading.textContent = recetas.length ? `Elige tu opcion` : 'No hay resultados';
 
+        resultado.appendChild(heading);
 
         recetas.forEach(receta => {
 
             const { idMeal, strMeal, strMealThumb } = receta;
 
             const recetaContenedor = document.createElement('DIV');
-            recetaContenedor.classList.add('col-md-4');
+            recetaContenedor.classList.add('col-md-3');
 
             const recetaCard = document.createElement('DIV');
-            recetaCard.classList.add('card', 'mb-4');
+            recetaCard.classList.add('card', 'mb-4', 'border-0', 'shadow');
 
             const recetaImagen = document.createElement('IMG');
-            recetaImagen.classList.add('card-img-top');
+            recetaImagen.classList.add('md-card-img', 'rounded-top');
             recetaImagen.alt = `Imagen de la receta ${strMeal ?? receta.titulo}`;
             recetaImagen.src = strMealThumb ?? receta.img;
 
             const recetaCardBody = document.createElement('DIV');
             recetaCardBody.classList.add('card-body');
 
-            const recetaHeading = document.createElement('H3');
-            recetaHeading.classList.add('card-title', 'mb-3');
+            const recetaHeading = document.createElement('P');
+            recetaHeading.classList.add('card-title', 'mb-3', 'col-12', 'text-truncate', 'fw-bold', 'text-center');
             recetaHeading.textContent = strMeal ?? receta.titulo;
 
             const recetaButton = document.createElement('BUTTON');
-            recetaButton.classList.add('btn', 'btn-danger', 'w-100');
+            recetaButton.classList.add('btn', 'w-100', 'bg-success', 'bg-opacity-50');
             recetaButton.textContent = 'Ver Receta';
             // recetaButton.dataset.bsTarget = "#modal";
             // recetaButton.dataset.bsToggle = "modal";
@@ -81,7 +82,6 @@ function iniciarApp() {
             recetaButton.onclick = function () {
                 seleccionarReceta(idMeal ?? receta.id);
             }
-
 
             // Inyectar en HTML
             recetaCardBody.appendChild(recetaHeading);
@@ -93,7 +93,6 @@ function iniciarApp() {
             recetaContenedor.appendChild(recetaCard);
 
             resultado.appendChild(recetaContenedor);
-
         });
     }
 
@@ -142,7 +141,7 @@ function iniciarApp() {
 
         //botones cerrar y favorito
         const btnFavorito = document.createElement('BUTTON');
-        btnFavorito.classList.add('btn', 'btn-danger', 'col');
+        btnFavorito.classList.add('btn', 'bg-success', 'bg-opacity-50', 'col');
         btnFavorito.textContent = existeStorage(idMeal) ? 'Eliminar Favorito' : 'Guardar Favorito';
 
         //LocalStorage
@@ -186,7 +185,6 @@ function iniciarApp() {
         const favoritos = JSON.parse(localStorage.getItem('favoritos')) ?? [];
         const nuevosFavoritos = favoritos.filter(favorito => favorito.id !== id);
         localStorage.setItem('favoritos', JSON.stringify(nuevosFavoritos));
-
     }
 
     function existeStorage(id) {
@@ -200,7 +198,6 @@ function iniciarApp() {
         const toast = new bootstrap.Toast(toastDiv);
         toastBody.textContent = mensaje;
         toast.show();
-
     }
 
     function obtenerFavoritos() {
